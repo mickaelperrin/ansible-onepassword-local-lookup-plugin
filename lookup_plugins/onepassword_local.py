@@ -4,6 +4,10 @@ from ansible.errors import AnsibleError, AnsibleParserError
 from ansible.plugins.lookup import LookupBase
 from onepassword_local_search.CliSimple import CliSimple
 __metaclass__ = type
+# Use local version of onepassword-local-search
+#import os, sys
+#sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/../../onepassword-local-search")
+#from  onepassword_local_search.CliSimple import CliSimple
 
 DOCUMENTATION = """
       lookup: onepassword-local 
@@ -69,7 +73,7 @@ class LookupModule(LookupBase):
                     elif field:
                         raise AnsibleError("could not find field: %s" % field)
                     else:
-                        raise AnsibleError("Trouvel when grabbing fields from item with uuid: %s" % uuid)
+                        raise AnsibleError("Trouble when grabbing fields from item with uuid: %s" % uuid)
             except SystemExit as e:
                 raise AnsibleError(e.code)
             except AnsibleParserError:
