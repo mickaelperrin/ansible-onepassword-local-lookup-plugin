@@ -2,3 +2,4 @@ onepassword-local-search==0.9.2
 molecule==2.20.1
 docker-py==1.10.6
 pytest==4.4.1
+pytest-mock==1.10.4

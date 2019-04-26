@@ -25,8 +25,6 @@ Example Playbook
       tasks
         - debug:
             msg: "{{ lookup('onepassword-local', 'p6iyvjqv4xdxw52hsacpkq4rgi', field='name') }}"
-        - debug:
-            msg: "{{ lookup('onepassword-local', 'p6iyvjqv4xdxw52hsacpkq4rgi', field='name', section='Section name') }}"
 
 Tests
 -----
