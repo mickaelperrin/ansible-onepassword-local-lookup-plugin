@@ -2,4 +2,9 @@
 - name: Converge
   hosts: all
   roles:
-    - role: onepassword-local-lookup-plugin
+    - role: ansible-onepassword-local-lookup-plugin
+  tasks:
+    - name: generate test file
+      template:
+        src: testfile.txt.j2
+        dest: /testfile.txt

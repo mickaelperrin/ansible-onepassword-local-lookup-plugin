@@ -7,12 +7,18 @@ lint:
   name: yamllint
 platforms:
   - name: instance
-    image: centos:7
+    image: ubuntu:bionic
 provisioner:
   name: ansible
+  env:
+    ONEPASSWORD_CONFIG_FILE_PATH: ./tests/config
+    OP_SESSION_onepassword_local_search: azuDId6PvlUtwsLQZD-4jzGpMxUxRNQOxEgcdbZhppI
+    OP_SESSION_PRIVATE_KEY_FILE: ./tests/.Y_efcm4Gd_W4NnRTMeOuSEHPA5w
+    ONEPASSWORD_LOCAL_DATABASE_PATH: ./tests/B5.sqlite
   lint:
     name: ansible-lint
 verifier:
-  name: goss
+  name: testinfra
   lint:
-    name: yamllint
+    name: flake8
+    enabled: False
