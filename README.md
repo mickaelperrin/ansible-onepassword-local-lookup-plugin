@@ -25,6 +25,22 @@ Example Playbook
       tasks
         - debug:
             msg: "{{ lookup('onepassword-local', 'p6iyvjqv4xdxw52hsacpkq4rgi', field='name') }}"
+        - debug:
+            msg: "{{ lookup('onepassword-local', 'c3264cef-1e5e-4c96-a192-26729539f3f5', field='name', use_custom_uuid=True) }}"
+
+Custom uuid feature
+-------------------
+
+uuid in 1Password changes when you move an item from one vault to another. To prevent this issue, a custom uuid mapping feature has been implemented.
+
+ou need to add on each item a field named `UUID` (in capitals).
+
+Then run `op-local mapping update` to generate the mapping talbe relationship.
+
+You can now get an item using your own UUID by appending the `use_custom_uuid` parameter to the lookup.
+
+You can display UUID mapping by running `op-local mapping list`.
+
 
 Tests
 -----
