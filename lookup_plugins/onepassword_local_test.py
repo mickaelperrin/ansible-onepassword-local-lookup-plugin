@@ -3,6 +3,9 @@ from os import path
 from lookup_plugins.onepassword_local import LookupModule
 from ansible.errors import AnsibleError
 from pytest_mock import mocker
+#from onepassword_local_search.ConfigFileService import ConfigFileService
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/../../onepassword-local-search")
 from onepassword_local_search.services.ConfigFileService import ConfigFileService
 import json
 
@@ -12,6 +15,7 @@ def common_data(item):
         nl='\n',
         item_uuid='e25haqmocd5ifiymorfzwxnzry',
         login_uuid='zzfmhu2j7ajq55mmpm3ihs3oqy',
+        login_custom_uuid='c3264cef-1e5e-4c96-a192-26729539f3f5',
         subdomain='onepassword_local_search',
         session_key='azuDId6PvlUtwsLQZD-4jzGpMxUxRNQOxEgcdbZhppI'
     ).get(item)
@@ -46,6 +50,12 @@ def test_get_login_password(capsys):
 @pytest.mark.usefixtures("op_session")
 def test_get_login_username(capsys):
     LookupModule().run([common_data('login_uuid')], field='username')
+    std = capsys.readouterr()
+    assert std.out == 'username'
+
+@pytest.mark.usefixtures("op_session")
+def test_get_login_username(capsys):
+    LookupModule().run([common_data('login_custom_uuid')], field='username', use_custom_uuid=True)
     std = capsys.readouterr()
     assert std.out == 'username'
 
