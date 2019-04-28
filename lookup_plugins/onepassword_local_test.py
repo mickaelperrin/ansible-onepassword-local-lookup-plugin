@@ -3,10 +3,10 @@ from os import path
 from lookup_plugins.onepassword_local import LookupModule
 from ansible.errors import AnsibleError
 from pytest_mock import mocker
-#from onepassword_local_search.ConfigFileService import ConfigFileService
-import os, sys
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/../../onepassword-local-search")
-from onepassword_local_search.services.ConfigFileService import ConfigFileService
+from onepassword_local_search.ConfigFileService import ConfigFileService
+#import os, sys
+#sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/../../onepassword-local-search")
+#from onepassword_local_search.services.ConfigFileService import ConfigFileService
 import json
 
 
