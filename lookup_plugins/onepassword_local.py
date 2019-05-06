@@ -2,12 +2,13 @@
 from __future__ import (absolute_import, division, print_function)
 from ansible.errors import AnsibleError, AnsibleParserError
 from ansible.plugins.lookup import LookupBase
-from onepassword_local_search.CliSimple import CliSimple
 __metaclass__ = type
-# Use local version of onepassword-local-search
-#import os, sys
-#sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/../../onepassword-local-search")
-#from  onepassword_local_search.CliSimple import CliSimple
+from os import path, environ
+if environ.get('USE_LOCAL'):
+    import sys
+    sys.path.insert(0, path.dirname(path.abspath(__file__)) + "/../../onepassword-local-search")
+from onepassword_local_search.services.ConfigFileService import ConfigFileService
+from onepassword_local_search.CliSimple import CliSimple
 
 DOCUMENTATION = """
       lookup: onepassword-local 
