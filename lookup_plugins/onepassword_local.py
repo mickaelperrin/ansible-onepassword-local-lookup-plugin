@@ -7,8 +7,7 @@ from os import path, environ
 if environ.get('USE_LOCAL'):
     import sys
     sys.path.insert(0, path.dirname(path.abspath(__file__)) + "/../../onepassword-local-search")
-from onepassword_local_search.services.ConfigFileService import ConfigFileService
-from onepassword_local_search.CliSimple import CliSimple
+from onepassword_local_search.OnePassword import OnePassword
 
 DOCUMENTATION = """
       lookup: onepassword-local 
@@ -76,7 +75,7 @@ class LookupModule(LookupBase):
             else:
                 display.debug("1Password lookup full item with uuid: %s" % uuid)
             try:
-                result = CliSimple('onepassword-local', 'get', uuid, field).run()
+                result = OnePassword().get(uuid, field=field, output=False)
                 if result is not None:
                     ret.append(result.rstrip())
                 else:
@@ -86,6 +85,8 @@ class LookupModule(LookupBase):
                         raise AnsibleError("could not find field: %s" % field)
                     else:
                         raise AnsibleError("Trouble when grabbing fields from item with uuid: %s" % uuid)
+            except Exception as e:
+                raise AnsibleError(e.args[0])
             except SystemExit as e:
                 raise AnsibleError(e.code)
             except AnsibleParserError:

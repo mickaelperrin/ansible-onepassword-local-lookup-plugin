@@ -35,29 +35,26 @@ def op_session(monkeypatch, mocker):
 
 @pytest.mark.usefixtures("op_session")
 def test_get_login_title(capsys):
-    LookupModule().run([common_data('login_uuid')], field='title')
-    std = capsys.readouterr()
-    assert std.out == 'Connexion'
+    result = LookupModule().run([common_data('login_uuid')], field='title')
+    assert result == ['Connexion']
 
 
 @pytest.mark.usefixtures("op_session")
 def test_get_login_password(capsys):
-    LookupModule().run([common_data('login_uuid')], field='password')
-    std = capsys.readouterr()
-    assert std.out == 'password'
+    result = LookupModule().run([common_data('login_uuid')], field='password')
+    assert result == ['password']
 
 
 @pytest.mark.usefixtures("op_session")
 def test_get_login_username(capsys):
-    LookupModule().run([common_data('login_uuid')], field='username')
-    std = capsys.readouterr()
-    assert std.out == 'username'
+    result = LookupModule().run([common_data('login_uuid')], field='username')
+    assert result == ['username']
+
 
 @pytest.mark.usefixtures("op_session")
 def test_get_login_username(capsys):
-    LookupModule().run([common_data('login_custom_uuid')], field='username', use_custom_uuid=True)
-    std = capsys.readouterr()
-    assert std.out == 'username'
+    result = LookupModule().run([common_data('login_custom_uuid')], field='username', use_custom_uuid=True)
+    assert result == ['username']
 
 
 @pytest.mark.usefixtures("op_session")
