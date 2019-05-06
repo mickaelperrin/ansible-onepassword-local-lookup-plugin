@@ -26,7 +26,9 @@ Example Playbook
         - debug:
             msg: "{{ lookup('onepassword-local', 'p6iyvjqv4xdxw52hsacpkq4rgi', field='name') }}"
         - debug:
-            msg: "{{ lookup('onepassword-local', 'c3264cef-1e5e-4c96-a192-26729539f3f5', field='name', use_custom_uuid=True) }}"
+            msg: "{{ lookup('onepassword-local', 'c3264cef-1e5e-4c96-a192-26729539f3f5', field='your_custom_field') }}"
+        - debug:
+            msg: "{{ lookup('onepassword-local', '1234567890', field='password') }}"
 
 Custom uuid feature
 -------------------
