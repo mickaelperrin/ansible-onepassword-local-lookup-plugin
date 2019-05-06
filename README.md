@@ -33,13 +33,14 @@ Custom uuid feature
 
 uuid in 1Password changes when you move an item from one vault to another. To prevent this issue, a custom uuid mapping feature has been implemented.
 
-ou need to add on each item a field named `UUID` (in capitals).
+You need to add on each item a field named `UUID` (in capitals).
 
-Then run `op-local mapping update` to generate the mapping talbe relationship.
-
-You can now get an item using your own UUID by appending the `use_custom_uuid` parameter to the lookup.
+Then run `op-local mapping update` to generate the mapping table relationship.
 
 You can display UUID mapping by running `op-local mapping list`.
+
+As we migrated from Lastpass to 1Password, we have also implemented a UUID mapping feature
+related to a field named `LASTPASS_ID`. If the uuid given is 100% numeric, the search query will be performed over this field.
 
 
 Tests

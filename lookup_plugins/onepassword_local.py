@@ -22,18 +22,18 @@ DOCUMENTATION = """
             - pip module onepassword-local-search 
         options:
           _uuid:
-            description: uuid of the item to retrieve
+            description: uuid of the item to retrieve.
+            This may be:
+              - a 1Password uuid
+              - the value of a field named UUID in UUID v4 format
+              - the value of a field named LASTPASS_ID with a lastpass uuid (digits only)
+              Be sure to have run `op-local mapping update` to use custom uuid feature.
             required: True
           field:
             description: the name of the field to be retrieven 
             (name, username, password, notes, uri or any custom field)
             If not filled, the entire object is retrieven.
             default: None
-            required: False
-          use_custom_uuid:
-            description: grab uuid not from the 1Password uuid but search into
-            a custom field named UUID. This is implemented to prevent issues
-            when uuid of 1Password changes when moving item to another vault.
             required: False
 """
 
@@ -47,9 +47,12 @@ EXAMPLES = """
 - name: get 'custom_field'
   debug:
     msg: "{{ lookup('onepassword-local', 'e25haqmocd5ifiymorfzwxnzry', field='custom_field' }}"
-- name: get 'custom_field' with custom uuid field 
+- name: get 'custom_field' with custom UUID field (the field is named UUID)  
   debug:
-    msg: "{{ lookup('onepassword-local', 'c3264cef-1e5e-4c96-a192-26729539f3f5', field='custom_field', use_custom_uuid=True }}"
+    msg: "{{ lookup('onepassword-local', 'c3264cef-1e5e-4c96-a192-26729539f3f5', field='custom_field' }}"
+- name: get 'custom_field' with custom lastpass field (the field is named LASTPASS_ID)  
+  debug:
+    msg: "{{ lookup('onepassword-local', '1234567890', field='custom_field' }}"
 """
 
 try:
@@ -65,7 +68,6 @@ class LookupModule(LookupBase):
         ret = []
         field = kwargs.get('field')
         section = kwargs.get('section')
-        custom_uuid = kwargs.get('use_custom_uuid')
         for uuid in uuids:
             if field and section:
                 display.debug("1Password lookup field: %s in section %s of uuid: %s" % (field, section, uuid))
@@ -74,10 +76,7 @@ class LookupModule(LookupBase):
             else:
                 display.debug("1Password lookup full item with uuid: %s" % uuid)
             try:
-                if custom_uuid:
-                    result = CliSimple('onepassword-local', 'get', uuid, field, '--use-custom-uuid').run()
-                else:
-                    result = CliSimple('onepassword-local', 'get', uuid, field).run()
+                result = CliSimple('onepassword-local', 'get', uuid, field).run()
                 if result is not None:
                     ret.append(result.rstrip())
                 else:
