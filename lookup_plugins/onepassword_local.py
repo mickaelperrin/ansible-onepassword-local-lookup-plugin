@@ -10,46 +10,44 @@ if environ.get('USE_LOCAL'):
 from onepassword_local_search.OnePassword import OnePassword
 
 DOCUMENTATION = """
-      lookup: onepassword-local 
-        author: Mickaël Perrin <contact@mickaelperrin.fr> 
-        version_added: "1.0"
-        short_description: fast lookup of secrets stored in a local 1Password database (B5.sqlite) 
-        description:
-            - This plugin uses the onepassword-local-search python module that implements a faster way to retrieve
-            secrets by using a local 1Password database in B5.sqlite format.
-        requirements:
-            - pip module onepassword-local-search 
-        options:
-          _uuid:
-            description: uuid of the item to retrieve.
+    lookup: onepassword-local
+    author: Mickaël Perrin <contact@mickaelperrin.fr>
+    version_added: 1.0
+    short_description: fast lookup of secrets stored in a local 1Password database (B5.sqlite)
+    description: This plugin uses the onepassword-local-search python module that implements a faster way to retrieve
+        secrets by using a local 1Password database in B5.sqlite format.
+    requirements:
+        - pip module onepassword-local-search
+    options:
+        _uuid:
+          description: 'uuid of the item to retrieve.
             This may be:
               - a 1Password uuid
               - the value of a field named UUID in UUID v4 format
               - the value of a field named LASTPASS_ID with a lastpass uuid (digits only)
-              Be sure to have run `op-local mapping update` to use custom uuid feature.
-            required: True
-          field:
-            description: the name of the field to be retrieven 
-            (name, username, password, notes, uri or any custom field)
-            If not filled, the entire object is retrieven.
-            default: None
-            required: False
+          Be sure to have run `op-local mapping update` to use custom uuid feature.'
+          required: True
+        field:
+          description: 'the name of the field to be retrieven (name, username, password, notes, uri or any custom field).
+            If not filled, the entire object is retrieven.'
+          default: None
+          required: False
 """
 
 EXAMPLES = """
-- name: get 'item' 
+- name: get 'item'
   debug:
     msg: "{{ lookup('onepassword-local', 'e25haqmocd5ifiymorfzwxnzry' }}"
-- name: get 'password' 
+- name: get 'password'
   debug:
     msg: "{{ lookup('onepassword-local', 'e25haqmocd5ifiymorfzwxnzry', field='password' }}"
 - name: get 'custom_field'
   debug:
     msg: "{{ lookup('onepassword-local', 'e25haqmocd5ifiymorfzwxnzry', field='custom_field' }}"
-- name: get 'custom_field' with custom UUID field (the field is named UUID)  
+- name: get 'custom_field' with custom UUID field (the field is named UUID)
   debug:
     msg: "{{ lookup('onepassword-local', 'c3264cef-1e5e-4c96-a192-26729539f3f5', field='custom_field' }}"
-- name: get 'custom_field' with custom lastpass field (the field is named LASTPASS_ID)  
+- name: get 'custom_field' with custom lastpass field (the field is named LASTPASS_ID)
   debug:
     msg: "{{ lookup('onepassword-local', '1234567890', field='custom_field' }}"
 """
