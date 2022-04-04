@@ -1,3 +1,6 @@
 /.idea
 *.pyc
 pytestdebug.log
+/dist
+/build
+/ansible_1password_lookup_plugin.egg-info
